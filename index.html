@@ -26,6 +26,14 @@
       padding: 10px;
     }
 
+    .list-item:hover {
+      cursor: pointer;
+    }
+
+    .list-item.selected {
+      background-color: lightsalmon;
+    }
+
   </style>
 </head>
 
@@ -54,8 +62,11 @@
   the input text, we want to add an element to the list -->
     <h2>Items in the list</h2>
     <div id="list-items">
-      <div class="list-item">Milk 🥛</div>
-      <div class="list-item">Apples 🍎</div>
+      <!--
+        EXAMPLE ELEMENTS:
+         <div class="list-item">Milk 🥛</div>
+         <div class="list-item">Apples 🍎</div>
+      -->
       <!-- Items added here with JS -->
     </div>
   </div>
@@ -84,6 +95,16 @@
         // 2) Customize it as you want / manipulate it
         newItemNode.classList.add('list-item')
         newItemNode.innerText = inputValue
+        newItemNode.onclick = onItemClick
+        // ^ When we use a function as if it was a value, we don't call it
+        // we just write the name of the function.
+        // Here we're saying newItemNode, please, call this function when you will be actually clicked
+        // ANOTHER WAY TO DO THE SAME THING:
+        // but in this way we can add more than one listener for the same event.
+        // newItemNode.addEventListener("click", onItemClick)
+        // newItemNode.addEventListener("click", asd)
+        // newItemNode.addEventListener("click", lol)
+        // IN BOTH THESE WAYS THE FUNCTION WILL AUTOMATICALLY RECEIVE THE event OBJECT AS PARAMETER
 
         // 3) Add it somewhere to the DOM using appendChild / insertBefore
         document.getElementById('list-items').appendChild(newItemNode)
@@ -94,6 +115,19 @@
         document.getElementById('list-item-input').value = ""
       }
     }
+
+    function onItemClick(eventData) {
+
+      // How can I know the element that was clicked?
+      let clickedItem = eventData.target
+      // Every event has a .target property in their event data object.
+      // The target property contains the node/the tag that triggered the event.
+      // In this case, the tag that was clicked.
+
+      clickedItem.classList.toggle('selected')
+      // We add/remove the class selected
+    }
+
   </script>
 </body>
 
