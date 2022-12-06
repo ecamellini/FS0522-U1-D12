@@ -61,6 +61,7 @@
     <!-- When the user presses Enter, and they are typing inside
   the input text, we want to add an element to the list -->
     <h2>Items in the list</h2>
+    <button onclick="deleteSelected2()">Delete selected</button>
     <div id="list-items">
       <!--
         EXAMPLE ELEMENTS:
@@ -127,6 +128,37 @@
       clickedItem.classList.toggle('selected')
       // We add/remove the class selected
     }
+
+    function deleteSelected() {
+      let selectedItemsArray = document.getElementsByClassName('selected')
+      // This list will really be in sync with the DOM.
+      // If I remove one of the selected nodes from the DOM, actually
+      // it disappears and it will also be removed from the list.
+
+      // for (let i = 0; i < selectedItemsArray.length; i++) {
+      //   let selectedItem = selectedItemsArray[i]
+      //   document.getElementById('list-items').removeChild(selectedItem)
+      // }
+      // We cannot use a for loop on a list that changes in size while we are looping.
+
+      while (selectedItemsArray.length > 0) { // While we still have some elements to remove...
+        document.getElementById('list-items').removeChild(selectedItemsArray[0])
+      }
+    }
+
+    function deleteSelected2() {
+      let selectedItemsArray = document.querySelectorAll('.selected')
+      // ^ This has a difference with respect to getElementsByClassName, getElementsByTagName
+      // This is not "live" -- if we modify the dom, remove elements from the DOM, etc.
+      // these changes will not affect the items in this list.
+      // This applies to querySelector and querySelectorAll.
+
+      for (let i = 0; i < selectedItemsArray.length; i++) {
+        let selectedItem = selectedItemsArray[i]
+        document.getElementById('list-items').removeChild(selectedItem)
+      }
+    }
+
 
   </script>
 </body>
