@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input & Events</title>
+
+  <style>
+    #container {
+      width: 500px;
+      margin-inline: auto;
+      /* Same as margin: 0 auto; -- to align this to the center horizontally */
+    }
+
+    #list-item-input {
+      width: 300px;
+    }
+
+    .list-item {
+      border: 1px solid grey;
+      border-radius: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!--
+  EXAMPLE INPUT TAGS
+  <input type="text" />
+  <input type="date" />
+  <input type="color" />
+  <input type="checkbox" />
+  <input type="file" />
+  -->
+  <div id="container">
+    <h1>Grocery List</h1>
+    <input id="list-item-input" type="text" placeholder="Type item name and press ENTER..."
+      onkeyup="handleKeyUpOnInput(event)" />
+    <!--  When we are handling an event, for example onkeyup, we can write some JS
+  inside tha attribute, and also we have available a VARIABLE called event that contains
+  an object with all the information we may need about the event.
+
+  When we write this we are passing this object called event to the function, as parameter.
+  onkeyup="handleKeyUpOnInput(event)"
+  -->
+
+    <!-- When the user presses Enter, and they are typing inside
+  the input text, we want to add an element to the list -->
+    <h2>Items in the list</h2>
+    <div id="list-items">
+      <div class="list-item">Milk 🥛</div>
+      <div class="list-item">Apples 🍎</div>
+      <!-- Items added here with JS -->
+    </div>
+  </div>
+  <script>
+    function handleKeyUpOnInput(eventData) {
+      // This function accepts a parameter, we call it eventData.
+      // It will be set to the value of the event data when
+      // the function is called as a listener to an event.
+
+
+      // For onkeyup events, event data contains a key property with the key pressed.
+      if (eventData.key === 'Enter') {
+        let inputValue = document.getElementById('list-item-input').value
+        if (inputValue === '') {
+          alert("Text cannot be empty!")
+          return // this just stops the function and returns nothing.
+          // return actually does 2 things:
+          // 1) returning a value to the caller of the function
+          // 2) stopping the execution of the function
+        }
+
+        // 1) Create the new HTML element / tag / DOM node
+        let newItemNode = document.createElement('div')
+        //  ^ object representing an empty div
+
+        // 2) Customize it as you want / manipulate it
+        newItemNode.classList.add('list-item')
+        newItemNode.innerText = inputValue
+
+        // 3) Add it somewhere to the DOM using appendChild / insertBefore
+        document.getElementById('list-items').appendChild(newItemNode)
+        // ^ every time you want to add a new tag to the DOM
+        // you to get the parent of that tag, and add a new child to it.
+
+        // At the end, once we inserted the new element, we empty the field
+        document.getElementById('list-item-input').value = ""
+      }
+    }
+  </script>
+</body>
+
+</html>
