@@ -38,6 +38,20 @@
 </head>
 
 <body>
+  <script>
+    // Any code you write outside functions will be just executed whenever
+    // the script tag is encountered by the browser while rendering the HTML
+    // from top to bottom.
+
+    console.log(document.getElementById('list-items')) // null
+    // ^ This will be null because the tag #list-items does not exist yet.
+    // It is rendered later, is is below this tag in the HTML.
+
+    // And the following instructions will result in an error.
+    // document.getElementById('list-items').innerHTML += '<div class="list-item">Milk 🥛</div>'
+    // document.getElementById('list-items').innerHTML += '<div class="list-item">Apples 🍎</div>'
+  </script>
+
   <!--
   EXAMPLE INPUT TAGS
   <input type="text" />
@@ -51,15 +65,15 @@
     <input id="list-item-input" type="text" placeholder="Type item name and press ENTER..."
       onkeyup="handleKeyUpOnInput(event)" />
     <!--  When we are handling an event, for example onkeyup, we can write some JS
-  inside tha attribute, and also we have available a VARIABLE called event that contains
-  an object with all the information we may need about the event.
+          inside tha attribute, and also we have available a VARIABLE called event that contains
+          an object with all the information we may need about the event.
 
-  When we write this we are passing this object called event to the function, as parameter.
-  onkeyup="handleKeyUpOnInput(event)"
-  -->
+          When we write this we are passing this object called event to the function, as parameter.
+          onkeyup="handleKeyUpOnInput(event)"
+      -->
 
     <!-- When the user presses Enter, and they are typing inside
-  the input text, we want to add an element to the list -->
+         the input text, we want to add an element to the list -->
     <h2>Items in the list</h2>
     <button onclick="deleteSelected2()">Delete selected</button>
     <div id="list-items">
@@ -72,6 +86,22 @@
     </div>
   </div>
   <script>
+
+    // On page load, we want to add two items to the list.
+    function onLoadActions() {
+      console.log(document.getElementById('list-items')) // null
+      document.getElementById('list-items').innerHTML += '<div class="list-item" onclick="onItemClick(event)">Milk 🥛</div>'
+      document.getElementById('list-items').innerHTML += '<div class="list-item" onclick="onItemClick(event)">Apples 🍎</div>'
+    }
+
+    // This will execute a function whenever the page finished loading.
+    window.onload = onLoadActions
+    // Using this, you will never encounter the issue of a tag that still does not exist.
+    // See example of this issue in the script tag at the beginning of the body.
+    // ADVICE:
+    // NEVER RUN CODE OUTSIDE FUNCTIONS IN THE JS THAT YOU RUN INSIDE YOUR BROWSER.
+    // IF YOU WANT TO RUN CODE WHENVER THE PAGE JUST LOADED -- use window.onload
+
     function handleKeyUpOnInput(eventData) {
       // This function accepts a parameter, we call it eventData.
       // It will be set to the value of the event data when
